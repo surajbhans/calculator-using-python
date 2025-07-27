@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Python Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="calculator-container" role="main">
+    <h2>Calculate when you're late</h2>
+    <form method="post" id="calc-form" autocomplete="off">
+        <input type="text"
+               id="expression"
+               name="expression"
+               placeholder="0"
+               value="{% if request.form.expression %}{{ request.form.expression }}{% else %}0{% endif %}"
+               required
+               readonly
+               aria-label="Calculator display"
+        >
+        <div class="button-grid">
+            <button type="button" onclick="addChar('7')">7</button>
+            <button type="button" onclick="addChar('8')">8</button>
+            <button type="button" onclick="addChar('9')">9</button>
+            <button type="button" onclick="addChar('/')">÷</button>
+            <button type="button" onclick="addChar('4')">4</button>
+            <button type="button" onclick="addChar('5')">5</button>
+            <button type="button" onclick="addChar('6')">6</button>
+            <button type="button" onclick="addChar('*')">×</button>
+            <button type="button" onclick="addChar('1')">1</button>
+            <button type="button" onclick="addChar('2')">2</button>
+            <button type="button" onclick="addChar('3')">3</button>
+            <button type="button" onclick="addChar('-')">−</button>
+            <button type="button" onclick="addChar('0')">0</button>
+            <button type="button" onclick="addChar('.')">.</button>
+            <button type="button" onclick="addChar('+')">+</button>
+        </div>
+        <div class="action-row">
+            <button type="button" onclick="clearInput()" class="clear-btn" aria-label="Clear">C</button>
+            <button type="submit" class="equal-btn" aria-label="Equals">=</button>
+        </div>
+    </form>
+    <div class="result">
+        {% if result != '' %}
+            <span>= {{ result }}</span>
+        {% else %}
+            <span>&nbsp;</span>
+        {% endif %}
+    </div>
+</div>
+<script>
+function addChar(char) {
+    const input = document.getElementById('expression');
+    if (input.value === '0' || input.value === 'Error') input.value = '';
+    input.value += char;
+}
+function clearInput() {
+    document.getElementById('expression').value = '0';
+}
+</script>
+</body>
+</html>
